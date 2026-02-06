@@ -1,10 +1,28 @@
 import { generateConfirmationCode } from '../includes/helpers.js';
 import { getDb as db } from './db-in-file.js';
+import { yenToUsd } from '../includes/helpers.js';
 
 // ROUTE MODEL FUNCTIONS
 
-export const getAllRoutes = async () => {
-    return db().routes;
+export const getAllRoutes = async (query) => {
+    const { region, season } = query;
+
+    console.log("Filtering by Region:", region, "Season:", season);
+
+    // 1. Get a fresh copy/reference of the routes
+    let routes = db().routes;
+
+    // 2. Apply filters conditionally
+    // We check if the value exists, isn't 'All', and isn't an empty string
+    if (region && region !== 'All') {
+        routes = routes.filter(route => route.region === region);
+    }
+
+    if (season && season !== 'All') {
+        routes = routes.filter(route => route.bestSeason === season);
+    }
+
+    return routes;
 };
 
 export const getListOfRegions = async () => {
@@ -18,7 +36,17 @@ export const getListOfSeasons = async () => {
 };
 
 export const getRouteById = async (routeId) => {
-    return db().routes.find(route => route.id == routeId) || null;
+    let route = db().routes.find(route => route.id == routeId) || null;
+
+    if (!route) return null;
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+    route.operatingMonths = route.operatingMonths.map(month => monthNames[month-1] || month);
+
+    console.log("Updated Route: ", route);
+
+    return route;
 };
 
 export const getRoutesByRegion = async (region) => {
@@ -169,7 +197,7 @@ export const getTicketOptionsForRoute = async (routeId) => {
     return db().ticketClasses.map(tc => ({
         class: tc.class,
         name: tc.name,
-        price: route.distance * tc.pricePerKm,
+        price: yenToUsd(route.distance * tc.pricePerKm),
         amenities: tc.amenities,
         description: tc.description
     }));

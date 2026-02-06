@@ -406,14 +406,135 @@ article.confirmation-page {
 }
 
 @media print {
-    article.confirmation-page {
-        .confirmation-actions {
-            display: none;
-        }
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        .confirmation-header {
-            background-color: white;
-            border: 2px solid var(--clr-primary);
-        }
+    body {
+        font-size: 7.5pt; 
+        line-height: 1;   
+        background: white;
+    }
+
+    header, footer, .confirmation-actions, nav, .step-number, .detail-icon, .success-icon {
+        display: none !important;
+    }
+
+    @page {
+        size: portrait;
+        margin: 0.2cm; 
+    }
+
+   
+    .confirmation-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-bottom: 1.5px solid #000;
+        margin-bottom: 4px;
+        padding-bottom: 2px;
+        background: transparent !important; 
+    }
+
+    .confirmation-title { font-size: 11pt; font-weight: bold; }
+    .confirmation-message { display: none; } 
+
+    .booking-reference { 
+        text-align: right; 
+        border: none !important; 
+        padding: 0 !important; 
+        margin: 0 !important;
+    }
+    .reference-label { font-size: 5.5pt; text-transform: uppercase; }
+    .reference-number { font-size: 10pt; font-weight: bold; display: block; color: #000 !important; }
+
+    
+    .details-grid {
+        display: flex !important;
+        border: 1px solid #ddd;
+        margin-bottom: 4px;
+    }
+
+    .detail-card {
+        flex: 1;
+        padding: 2px 4px !important;
+        border: none !important;
+        border-right: 1px solid #ddd !important;
+        box-shadow: none !important;
+    }
+
+    .detail-card:last-child { border-right: none !important; }
+    .detail-label { font-size: 5.5pt; color: #666; display: block; }
+    .detail-value { font-size: 7.5pt; font-weight: bold; display: block; }
+
+    
+    .passengers-list {
+        display: grid !important;
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 2px !important;
+        margin-bottom: 4px;
+    }
+
+    .passenger-info-card {
+        border: 1px solid #eee !important;
+        padding: 2px !important;
+        box-shadow: none !important;
+    }
+
+    .passenger-header { 
+        padding: 1px 3px !important; 
+        background: #f9f9f9 !important; 
+    }
+    .passenger-title { font-size: 7pt; font-weight: bold; }
+
+    .passenger-details { padding: 2px !important; gap: 0 !important; }
+    .passenger-detail { 
+        flex-direction: row !important; 
+        justify-content: flex-start;
+        gap: 4px;
+        font-size: 6.5pt; 
+    }
+    .passenger-label { min-width: 30px; font-weight: bold; color: #777; }
+
+    
+    .steps-list {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between !important;
+        border: 1px dashed #ccc;
+        padding: 3px !important;
+        gap: 10px !important;
+    }
+
+    .step-item { flex: 1; text-align: left; }
+    .step-title { font-size: 7pt; font-weight: bold; margin: 0 !important; }
+    .step-description { font-size: 6pt; color: #555; line-height: 1; }
+
+    .section-title {
+        font-size: 7.5pt;
+        font-weight: bold;
+        background: #eee !important;
+        padding: 1px 4px;
+        margin: 2px 0 !important; 
+        border-bottom: none !important;
+    }
+
+    
+    .important-info {
+        margin-top: 2px;
+        padding: 3px !important;
+        border-left: 2px solid #000 !important;
+    }
+
+    .info-title { font-size: 7pt; margin-bottom: 1px !important; }
+    .info-list {
+        column-count: 2;
+        font-size: 6pt;
+        margin-left: 10px;
+        gap: 10px;
     }
 }
