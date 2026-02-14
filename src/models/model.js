@@ -197,7 +197,7 @@ export const getTicketOptionsForRoute = async (routeId) => {
     return db().ticketClasses.map(tc => ({
         class: tc.class,
         name: tc.name,
-        price: yenToUsd(route.distance * tc.pricePerKm),
+        price: route.distance * yenToUsd(tc.pricePerKm),
         amenities: tc.amenities,
         description: tc.description
     }));
